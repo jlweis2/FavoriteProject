@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<!--  ********************************************************************
+      Jlweis2_Program_5.html        by JL Weis        28 NOV 2016
+      The JavaScript script contained in this file
+      runs when given a sequence of rotations and reflections of a colored square. It determines the orientation of that same square both before & after the rotations and reflections have been applied one-after-another, from left-to-right
+      ********************************************************************  -->
+
+<html>
+
+  <head> 
+    <meta charset = 'utf-8'>
+    <title>table project</title>
+
+ <style> 
+    table{ border: 1px solid black; margin:auto; padding:5px;} 
+    td.colorSquare {width:100px; height:100px; border:2px solid white}  
+ </style>
+
+
+  <body>
+<hr>      
+<table>
+    <tr>
+    <td>
+        <table style='margin:20px'>
+        
+        <tr>
+            <caption>Before</caption>
+            <td id = 'red'  style='background-color:red' class='colorSquare'></td>
+            <td id = 'green' style='background-color:green' class='colorSquare'></td>
+        </tr>
+        <tr>
+            <td id = 'blue' style='background-color:blue' class='colorSquare'></td>
+            <td id = 'yellow' style='background-color:yellow' class='colorSquare'></td>
+        </tr>
+     
+        </table>
+    </td>
+
+    <td>
+    <table id='after' style='margin:20px'>
+        <tr>
+            <caption>After</caption>
+            <td  id = 'cell00' style='background-color:red' class='colorSquare'></td>
+            <td  id = 'cell01' style='background-color:green' class='colorSquare'></td>
+        </tr>
+        <tr>
+            <td  id = 'cell10' style='background-color:blue' class='colorSquare'></td>
+            <td id = 'cell11' style='background-color:yellow' class='colorSquare'></td>
+        </tr>
+    </table>
+         </td>
+    </tr>
+</table>
+
+      <hr>
+      <p id = 'theParagraph' style='text-align:center;'></p>
+      <hr>
+
+  </head>      
+  </body>
+<script> 
+var introduction = window.alert("This program runs when given a sequence of rotations and reflections of a colored square. It determines the orientation of that same square both before and after the rotations and reflections have been applied one-after-another, from left-to-right. The numbers optional to give are 1-8.")
+var instructions = window.alert("1: This will rotate all the colors counter clockwise.\n2: This will rotate all the colors counter clockwise twice.\n3: This Will rotate all the colors counter clockwise three times.\n4: This flips the colors based on the horizontal axis.\n5: This flips the colors based on the vertical axis.\n6: This flips the colors on the diagonal, from upper-right to lower-left.\n7: This flips the colors on the diagonal, from upper-left to lower-right.")
+var rotations = window.prompt("Enter string of rotations and reflections.")
+
+var originalColorSquare = [ ['red', 'green'], ['blue', 'yellow'] ] ;
+
+   
+var copy = originalColorSquare.slice(); 
+//This begins the loop for the different rotations. 
+ for (var i = 0; i < rotations.length ; i++)
+    {
+    var currentColor = rotations.charAt(i) ;// change currentColor to currentDigit
+    //---------------------------------------------------------------------------------------    
+       if (currentColor == '1') //This rotates the color square 90 degrees counter-clockwise
+            {var firstLowerLeft = copy[1][0] ;
+             
+             copy[1][0] = copy[0][0] ;
+             copy[0][0] = copy[0][1] ;
+             copy[0][1] = copy[1][1] ;
+             copy[1][1] = firstLowerLeft ;
+            
+            } 
+    //---------------------------------------------------------------------------------------   
+        
+        if (currentColor == '2') // This rotates the color square 180 degrees counter-clockwise
+            {
+                var secondLowerLeft = copy[1][0] ;
+                var secondUpperLeft = copy[0][0] ;
+                
+                copy[1][0] = copy[0][1] ;
+                copy[0][0] = copy[1][1] ;
+                copy[0][1] = secondLowerLeft ;
+                copy[1][1] = secondUpperLeft ;
+            }
+    //---------------------------------------------------------------------------------------
+        if (currentColor == '3') //This rotates the square 270 degrees counter-clockwise
+            {
+                var thirdLowerLeft = copy[1][0]
+                
+                copy[1][0] = copy[1][1] ;
+                copy[1][1] = copy[0][1] ;
+                copy[0][1] = copy[0][0] ;
+                copy[0][0] = thirdLowerLeft ;
+            }
+    //--------------------------------------------------------------------------------------- 
+        if (currentColor == '4') //This reflects on the horizontal axis: Fix This one
+            {
+                var forthLowerLeft = copy[1][0] ;
+                var forthLowerRight = copy[1][1] ;
+                
+                copy[1][0] = copy[0][0] ;
+                copy[1][1] = copy[0][1] ;
+                copy[0][0] = forthLowerLeft ;
+                copy[0][1] = forthLowerRight ;
+            }
+        
+    //---------------------------------------------------------------------------------------
+        if (currentColor == '5') //This reflects on the vertical axis: 
+            {
+                var fifthLowerLeft = copy[1][0] ;
+                var fifthUpperLeft = copy[0][0] ;
+                
+                copy[1][0] = copy[1][1] ;
+                copy[0][0] = copy[0][1] ;
+                copy[1][1] = fifthLowerLeft ;
+                copy[0][1] = fifthUpperLeft ;
+            }
+    //---------------------------------------------------------------------------------------
+        if (currentColor == '6') //This reflects on the diagonal from upper-left to lower-right
+            {
+                var sisthLowerLeft = copy[1][0] ;
+                
+                copy[1][0] = copy[0][1] ;
+                copy[0][1] = sisthLowerLeft ;
+            }
+    //---------------------------------------------------------------------------------------
+        if (currentColor == '7') //This reflects on the diagonal from upper-right to lower-left
+            {
+                var seventhUpperLeft = copy[0][0] ;
+                
+                copy[0][0] = copy[1][1] ;
+                copy[1][1] = seventhUpperLeft ;
+            }
+    
+    //---------------------------------------------------------------------------------------
+    
+    
+    }  // This is the end of the For Loop
+    
+document.getElementById('cell00').style.backgroundColor = copy[0][0] ;
+document.getElementById('cell01').style.backgroundColor = copy[0][1] ;
+document.getElementById('cell10').style.backgroundColor = copy[1][0] ;
+document.getElementById('cell11').style.backgroundColor = copy[1][1] ; 
+document.getElementById('theParagraph').textContent = 'Rotations and Reflections Applied: ' + rotations ;    
+</script>
+    
+<p>
+ This program runs when given a sequence of rotations and reflections of a colored square. It determines the orientation of that same square both before and after the rotations and reflections have been applied one-after-another, from left-to-right. The numbers optional to give are 1-8.
+</p>
+    <p>1: This will rotate all the colors counter clockwise.</p>
+    <p>2: This will rotate all the colors counter clockwise twice.</p>
+    <p>3: This Will rotate all the colors counter clockwise three times.</p>
+    <p>4: This flips the colors based on the horizontal axis.</p>
+    <p>5: This flips the colors based on the vertical axis.</p>
+    <p>6: This flips the colors on the diagonal, from upper-right to lower-left.</p>
+    <p>7: This flips the colors on the diagonal, from upper-left to lower-right.</p>
+
+    
+    
+    
+    
+    
+</html>
